@@ -10,24 +10,24 @@ function calculateQuadraticEquation(){
     span.textContent = "х = "+result;
 }
 
-"use strict"
-
 function getResult(a,b,c){
+    "use strict"
     // код для задачи №1 писать здесь
     //return x;
   let D = (b** - (4*a*c));
   let x = [];
 
    if (D < 0) {
-     return false;  
-   } if (D == 0) {
-     x = [(-b + Math.sqrt(D)) / (2 * a)];
-     return x;
-    } else if (D > 0) {
-      x = [((-b + Math.sqrt(D)) / (2 * a)), ((-b - Math.sqrt(D)) / (2 * a))];
-      return x;
-    }
+     x.push ([]);  
+   } else  if (D === 0) {
+     x.push ((-b + Math.sqrt(D)) / (2 * a));
+   } else (D > 0) 
+     x.push ((-b + Math.sqrt(D)) / (2 * a)); 
+     x.push ((-b - Math.sqrt(D)) / (2 * a));
+    return x;
 }
+
+getResult(2,4,-3);
 
 function calculateAverageRating(){
     let marks = window.marks.value.split("").map(Number).filter((n)=> !isNaN(n) && n > 0);
@@ -39,17 +39,16 @@ function getAverageMark(marks){
     // код для задачи №2 писать здесь
     //return averageMark;
     let sum = 0;
-	let averageMark;
-    if (marks.length() > 5) {
+
+    if (marks.length > 5) {
     	console.log("Количество оценок больше 5");
     	marks.splice(5);
     }
     console.log(marks);
-    for (let i = 0; i < marks.length(); i++) {
+    for (let i = 0; i < marks.length; i++) {
     	sum = sum + marks[i];
     }
-	averageMark = sum / marks.length();
-    return averageMark;
+    return sum / marks.length;
 }
 
 function calculateDrinkTask(){
