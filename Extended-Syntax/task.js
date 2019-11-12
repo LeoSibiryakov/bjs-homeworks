@@ -18,11 +18,11 @@ function getResult(a,b,c){
   let x = [];
 
    if (D < 0) {
-     x.push ([]);  
+     x.push (x);  
    } else  if (D === 0) {
-     x.push ((-b + Math.sqrt(D)) / (2 * a));
-   } else (D > 0) 
-     x.push ((-b + Math.sqrt(D)) / (2 * a)); 
+     x.push ((-b / (2 * a)));
+   } 
+     x.push ((-b + Math.sqrt(D)) / (2 * a)), 
      x.push ((-b - Math.sqrt(D)) / (2 * a));
     return x;
 }
