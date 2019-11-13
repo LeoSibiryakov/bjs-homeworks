@@ -20,7 +20,7 @@ let x = [];
 
 if (D === 0) {
   x.push (-b/(2*a));
-} if (D > 0) {
+} else if (D > 0) {
   x.push ((-b + Math.sqrt(D)) / (2 * a));  
   x.push ((-b - Math.sqrt(D)) / (2 * a));
 } return x;
