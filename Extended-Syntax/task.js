@@ -1,4 +1,4 @@
-
+"use strict"
 
 function calculateQuadraticEquation(){
     let a = +window.a.value;
@@ -11,17 +11,14 @@ function calculateQuadraticEquation(){
 }
 
 function getResult(a,b,c){
-  "use strict"
-  // код для задачи №1 писать здесь
-  //return x;
   let D = Math.pow(b,2) - (4 * a * c);
   let x = [];
   
   if (D === 0) {
-    x.push (-b/(2*a));
+    x.push(-b/(2*a));
   } else if (D > 0) {
-    x.push ((-b + Math.sqrt(D)) / (2 * a));  
-    x.push ((-b - Math.sqrt(D)) / (2 * a));
+    x.push((-b + Math.sqrt(D)) / (2 * a));  
+    x.push((-b - Math.sqrt(D)) / (2 * a));
   } return x;
   }
 
