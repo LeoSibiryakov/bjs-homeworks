@@ -1,48 +1,102 @@
-function setAlarm(time, callback) { // функция, проверяющая время с заданным
-	const alarm = time;
-	return (curTime) => {
-		if (curTime === alarm) {
-			callback();
-		}
-	}
+class AlarmClock {
+
+    constructor() {
+        this.alarmCollection = [];
+        this.timerId = null;
+    }
+
+    addClock(time,callback,id) {
+        if (!id) {
+            console.error('Ошибка! Параметр "id" не передан');
+            return;
+        }
+        if (this.alarmCollection.find(item => item.id === id)) {
+            console.error('Ошибка! Параметр "id" уже существует');
+            return;
+        }
+        this.alarmCollection.push({
+			id: id,
+			callback: callback,
+			time: time
+	});
 }
 
-const goodMorning = function() {
-    console.log('Good Morning, Василий.');
-} 
-const goodNight = function() {
-    console.log('Good Night, Василий.') // объявляем переменные ,выводящие на экран уведомление.
-} 
-
-function setDaylyRhythm(wakeUpTime, bedTime) { //функция с параметрами подъема и укладывания
-	const wakeUp = setAlarm(wakeUpTime, goodMorning); 
-	const bed = setAlarm(bedTime, goodNight); 
-
-	setInterval(() => { 
-		const now = new Date();  // переменная текущей даты
-		let h = now.getHours(); // текущего времени
-        let m = now.getMinutes(); // текущей минуты
-
-        if (h < 10) {
-            h = '0' + h;
+    removeClock(id) {
+        if (this.alarmCollection.some(item => item.id === id)) {
+            this.alarmCollection = this.alarmCollection.filter(item => item.id !== id);
+            console.log( `Будильник ${id} удален!`);
+            return true;
         } else {
-            h;
+            console.log(`Будильника ${id} несуществует!`);
+            return false;
+        }      
+    }
+
+    getCurrentFormattedTime() {
+        let date = new Date();
+        let hour = date.getHours();
+        let minutes = date.getMinutes();
+
+        if (hour < 10) {
+            hour = `0${hour}`;
         }
 
-        if (m < 10) {
-            m = '0' + m;
-        } else {
-            m;
-        }                     // проверяем условия для правильного отображения времени
+        if (minutes < 10) {
+            minutes = `0${minutes}`;
+        }
+        return `${hour}:${minutes}`;
+    }
 
-		const time = h + ': ' + m;
-		wakeUp(time);
-		bed(time);
-	}, 1000);  // срабатывание с задержкой в 1 секунду
+    start() {
+        function checkClock(item) {
+            if (item.time = newDate) {
+                return item.callback;
+            }
+        }
+
+        let newDate = this.getCurrentFormattedTime();
+        let interval = setInterval(() => {
+            this.alarmCollection.forEach(item => checkClock(item))
+        }, 1000);
+        return this.timerId = interval;
+    }
+
+    stop() {
+        if (this.timerId !== null) {
+            clearInterval(this.timerId);
+        }
+        return this.timerId = null;
+    }
+
+    printAlarms () {
+        this.alarmCollection.forEach(element => console.log(`Будильник под номером ${element.id} зазвонит ${element.time}`));
+    }
+
+    clearAlarms () {
+        this.stop();
+        this.alarmCollection = [];
+    }
 }
 
-checkTime = setAlarm('07:00', goodMorning);
-checkTime('07:30');
-checkTime('07:00');
+function testCase() {
+    let wakeUpAlarm = new AlarmClock;
 
-setDaylyRhythm('23:30','23:50');
+    wakeUpAlarm.addClock('23.30', () => console.log('Начинаем готовится ко сну!'), 1);
+    wakeUpAlarm.addClock('23.31', () => {
+        console.log('Выключай компьютер!');
+        wakeUpAlarm.removeClock(2)
+    }, 2);
+    wakeUpAlarm.addClock('23.31', () => console.log('И телефон поставь на зарядку!'));
+    wakeUpAlarm.addClock('23.32', () => {
+        console.log('Опять проспишь и опаздаешь на работу!');
+        wakeUpAlarm.clearAlarms();
+        wakeUpAlarm.printAlarms();
+    }, 3);
+    wakeUpAlarm.addClock('23.50', () => {
+        console.log('Последнее китайское предупреждение!')
+    }, 1);
+    wakeUpAlarm.printAlarms();
+    wakeUpAlarm.start();
+}
+
+testCase();
