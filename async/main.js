@@ -14,11 +14,7 @@ class AlarmClock {
             console.error('Ошибка! Параметр "id" уже существует');
             return;
         }
-        this.alarmCollection.push({
-			id: id,
-			callback: callback,
-			time: time
-	});
+        this.alarmCollection.push({id,callback,time});
 }
 
     removeClock(id) {
@@ -50,7 +46,7 @@ class AlarmClock {
     start() {
         function checkClock(item) {
             if (item.time = newDate) {
-                return item.callback;
+                return item.callback();
             }
         }
 
@@ -79,7 +75,7 @@ class AlarmClock {
 }
 
 function testCase() {
-    let wakeUpAlarm = new AlarmClock;
+    let wakeUpAlarm = new AlarmClock();
 
     wakeUpAlarm.addClock('23.30', () => console.log('Начинаем готовится ко сну!'), 1);
     wakeUpAlarm.addClock('23.31', () => {
